@@ -1,7 +1,5 @@
-﻿using Unity.AI.Navigation.Samples;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
-using static UnityEngine.GraphicsBuffer;
 
 public class ChaseState : JokerStateBase
 {
@@ -11,9 +9,8 @@ public class ChaseState : JokerStateBase
 
     private NavMeshAgent _agent;
     private Vector3 _lastKnownPosition;
-    private float _timeSinceLastSawTarget;
     private Transform _target;
-    private float _followTime = 0f;
+    private float _timeSinceLastSawTarget = 0f;
 
     public override void Init(JokerStateMachine stateMachine)
     {
@@ -38,7 +35,7 @@ public class ChaseState : JokerStateBase
         {
             if (_target != null)
             {
-                if (_followTime >= _ifLeftTargetFollowTime)
+                if (_timeSinceLastSawTarget >= _ifLeftTargetFollowTime)
                 {
                     FollowLastKnownPosition();
                     Debug.Log("Go to Last Pos");
@@ -47,7 +44,7 @@ public class ChaseState : JokerStateBase
                 else
                 {
                     Debug.Log("Follow Last Target");
-                    _followTime += Time.deltaTime;
+                    _timeSinceLastSawTarget += Time.deltaTime;
                     _lastKnownPosition = _target.position;
                 }
             }
@@ -64,7 +61,6 @@ public class ChaseState : JokerStateBase
         else
         {
             _target = _fov.Target;
-            _followTime = 0;
             _timeSinceLastSawTarget = 0;
             _lastKnownPosition = _target.position;
             FollowTarget();

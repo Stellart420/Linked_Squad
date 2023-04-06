@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 public class LookAroundState : JokerStateBase
 {
     [SerializeField] private float _turnSpeed = 20f;
     [SerializeField] private float _timeToLook = 2f;
 
+    private NavMeshAgent _agent;
     private float _lookTimer;
     private int _lookDirection;
+
+    public override void Init(JokerStateMachine stateMachine)
+    {
+        base.Init(stateMachine);
+        _agent = stateMachine.Agent;
+    }
 
     public override void Enter()
     {
@@ -22,7 +30,7 @@ public class LookAroundState : JokerStateBase
     {
         base.Tick();
 
-        StateMachine.Agent.transform.Rotate(Vector3.up, _lookDirection * _turnSpeed * Time.deltaTime);
+        _agent.transform.Rotate(Vector3.up, _lookDirection * _turnSpeed * Time.deltaTime);
 
         _lookTimer -= Time.deltaTime;
 

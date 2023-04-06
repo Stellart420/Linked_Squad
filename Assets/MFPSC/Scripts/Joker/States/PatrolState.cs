@@ -13,7 +13,6 @@ public class PatrolState : JokerStateBase
 
     private NavMeshAgent _agent;
     private Vector3 _currentPoint;
-    private bool _canMove;
     private float _stayTime = 0;
 
     public override void Init(JokerStateMachine stateMachine)
@@ -65,20 +64,13 @@ public class PatrolState : JokerStateBase
         var canRich = false;
         while (!canRich)
         {
-            var point = GetRandomNavMeshPoint();
+            var point = StateMachine.GetRandomNavMeshPoint();
             if (NavMesh.CalculatePath(_agent.transform.position, point, _agent.areaMask, navMeshPath))
             {
                 _currentPoint = point;
                 canRich = true;
             }
         }
-    }
-
-    public Vector3 GetRandomNavMeshPoint()
-    {
-        var navMesh = NavMesh.CalculateTriangulation();
-        int index = Random.Range(0, navMesh.vertices.Length);
-        return navMesh.vertices[index];
     }
 
     [Button()]

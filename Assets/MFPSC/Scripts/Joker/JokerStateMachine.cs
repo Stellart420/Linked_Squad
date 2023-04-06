@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Unity.AI.Navigation.Samples;
 using UnityEngine;
 using UnityEngine.AI;
+using Random = UnityEngine.Random;
 
 public class JokerStateMachine : AIStateMachineBase<JokerStateBase>
 {
@@ -26,5 +26,12 @@ public class JokerStateMachine : AIStateMachineBase<JokerStateBase>
     public virtual JokerStateBase GetState(Type stateType)
     {
         return _states.FirstOrDefault(state => stateType == state.GetType());
+    }
+
+    public Vector3 GetRandomNavMeshPoint()
+    {
+        var navMesh = NavMesh.CalculateTriangulation();
+        int index = Random.Range(0, navMesh.vertices.Length);
+        return navMesh.vertices[index];
     }
 }

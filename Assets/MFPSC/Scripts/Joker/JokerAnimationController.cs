@@ -1,5 +1,4 @@
-﻿using System;
-using Unity.AI.Navigation.Samples;
+﻿using Unity.AI.Navigation.Samples;
 using UnityEngine;
 
 public class JokerAnimationController : MonoBehaviour
