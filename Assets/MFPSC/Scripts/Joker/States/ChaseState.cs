@@ -53,7 +53,7 @@ public class ChaseState : JokerStateBase
             }
             else
             {
-                if (StateMachine.Agent.remainingDistance <= 0.1f)
+                if (_agent.remainingDistance <= 0.1f)
                 {
                     var lookAroundState = StateMachine.GetState(typeof(LookAroundState));
                     StateMachine.SetState(lookAroundState);
@@ -84,13 +84,13 @@ public class ChaseState : JokerStateBase
     private void FollowTarget()
     {
         NavMeshHit hit = new NavMeshHit();
-        StateMachine.Agent.ResetPath();
+        _agent.ResetPath();
         NavMesh.SamplePosition(_target.position, out hit, float.MaxValue, StateMachine.Agent.areaMask);
-        StateMachine.Agent.SetDestination(hit.position);
+        _agent.SetDestination(hit.position);
     }
 
     private void FollowLastKnownPosition()
     {
-        StateMachine.Agent.SetDestination(_lastKnownPosition);
+        _agent.SetDestination(_lastKnownPosition);
     }
 }
